@@ -1,0 +1,25 @@
+{% extends "game/base.html" %}
+{% load static %}
+
+{% block title %}
+    Game
+{% endblock %}
+
+{% block content %}
+
+    <h1 id="goal-header"></h1>
+
+    <div id="ladder-list"></div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        var curr = "{{ start }}";
+        var end = "{{ end }}";
+        var links;
+
+        var ladderPath = [curr];
+    </script>
+    <script src= {% static "game/game.js" %}></script>
+{% endblock %}
