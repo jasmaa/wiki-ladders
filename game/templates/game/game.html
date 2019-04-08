@@ -7,9 +7,37 @@
 
 {% block content %}
 
-    <h1 id="goal-header"></h1>
+    <div class="container-fluid">
 
-    <div id="ladder-list"></div>
+        <div class="row">
+            
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <h1 id="curr-header"></h1>
+            </div>
+            <div class="col">
+                <h1 id="goal-header"></h1>
+            </div>
+        </div>
+
+        <div class="row">
+                <div class="col">
+                    <div id="curr-content" class="jumbotron">
+                    </div>
+                </div>
+                <div class="col">
+                    <div id="goal-content" class="jumbotron">
+                    </div>
+                </div>
+            </div>
+
+        <div class="row">
+            <div id="ladder-list" class="center">
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
 
@@ -17,9 +45,6 @@
     <script>
         var curr = "{{ start }}";
         var end = "{{ end }}";
-        var links;
-
-        var ladderPath = [curr];
     </script>
     <script src= {% static "game/game.js" %}></script>
 {% endblock %}

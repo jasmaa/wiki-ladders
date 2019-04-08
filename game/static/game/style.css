@@ -1,6 +1,7 @@
+.center {
+    margin: auto;
+}
 
-#ladder-list {
-    height: 400px;
-    width: 80%;
-    overflow:auto;
+.btn {
+    margin: 1% 1% 1% 1%;
 }
