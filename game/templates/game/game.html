@@ -10,7 +10,7 @@
     <div class="container-fluid">
 
         <div class="row">
-            
+            <h1 id="curr-jumps"></h1>
         </div>
 
         <div class="row">
@@ -23,15 +23,28 @@
         </div>
 
         <div class="row">
-                <div class="col">
-                    <div id="curr-content" class="jumbotron">
-                    </div>
-                </div>
-                <div class="col">
-                    <div id="goal-content" class="jumbotron">
-                    </div>
+            <div class="col">
+                <div id="curr-content" class="jumbotron">
                 </div>
             </div>
+            <div class="col">
+                <div id="goal-content" class="jumbotron">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <h3 id="section-list" class="center"></h3>
+        </div>
+        <br>
+
+        <div class="row">
+            <div class="btn-group center" role="group">
+                <button class="btn btn-info" onclick="moveSection(-1)"><</button>
+                <button class="btn btn-info" onclick="moveSection(1)">></button>
+            </div>
+        </div>
+        <br>
 
         <div class="row">
             <div id="ladder-list" class="center">

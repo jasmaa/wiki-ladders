@@ -1,6 +1,8 @@
 
 var links;
 var ladderPath = [curr];
+var sectionList = [];
+var currSection = 0;
 
 const MAX_SUMMARY_WORDS = 100;
 const MAX_LINKS = 9999;
@@ -51,28 +53,110 @@ function jumpPage(target){
 
             // update page
             $('#ladder-list').empty()
-            links.slice(0, 10).forEach(element => {
-                var linkBtn = document.createElement("button");
-                linkBtn.innerHTML = element;
-                linkBtn.className = "btn btn-primary";
-                linkBtn.onclick = function(){
-                    jumpPage(element);
-                };
-
-                $('#ladder-list').append(linkBtn);
-            });
+            buildSections(links);
+            moveSection(0);
 
             // update page content
-
             setPageSummary(target, 'curr-content');
 
-            $('#curr-content').html();
+            // update jump count
+            $('#curr-jumps').html(ladderPath.length);
 
             // update headers
             setHeaders();
             ladderPath.push(curr);
+
+            // scroll back up
+            document.body.scrollTop = document.documentElement.scrollTop = 0;
+
+            // detect win
+            detectWin();
         }
     });
+}
+
+// detects win
+function detectWin(){
+    if(curr == end){
+        //TODO: add win code
+        alert(`You won in ${ladderPath.length} jumps!`);
+    }
+}
+
+// Builds search sections
+function buildSections(links){
+    // reset
+    $('#ladder-list').empty()
+    $('#section-list').empty();
+    sectionList = [];
+    currSection = 0;
+
+    // build map
+    var linkMap = new Map();
+    links.forEach(element => {
+        var key = element[0].toLowerCase();
+        if(linkMap.has(key)){
+            linkMap.get(key).push(element);
+        }
+        else{
+            linkMap.set(key, []);
+            linkMap.get(key).push(element);
+        }
+    });
+
+    // build html
+    for(let key of linkMap.keys()){
+
+        // add section
+        var section = document.createElement("div");
+        section.id = `section-${key}`;
+        $('#ladder-list').append(section);
+        sectionList.push(key);
+
+        // add section title
+        var sectionTitle = document.createElement("span");
+        sectionTitle.innerHTML = key;
+        sectionTitle.id = `section-title-${key}`;
+        sectionTitle.className = "badge badge-secondary";
+        $('#section-list').append(sectionTitle);
+
+        // add buttons to section
+        linkMap.get(key).forEach(element => {
+            var linkBtn = document.createElement("button");
+            linkBtn.innerHTML = element;
+            linkBtn.className = "btn btn-primary";
+            linkBtn.onclick = function(){
+                jumpPage(element);
+            };
+
+            $(`#${section.id}`).append(linkBtn);
+            $(`#${section.id}`).hide();
+        });
+
+        
+    }
+
+    
+}
+
+// Moves n sections
+function moveSection(n){
+
+    // reset old section
+    $(`#section-${sectionList[currSection]}`).hide();
+    $(`#section-title-${sectionList[currSection]}`).addClass("badge-secondary");
+    $(`#section-title-${sectionList[currSection]}`).removeClass("badge-success");
+    
+
+    // update current
+    currSection += n + sectionList.length;
+    currSection %= sectionList.length;
+
+    // fade in
+    sectionId = sectionList[currSection];
+    $(`#section-${sectionList[currSection]}`).fadeIn();
+    $(`#section-title-${sectionList[currSection]}`).addClass("badge-success");
+    $(`#section-title-${sectionList[currSection]}`).removeClass("badge-secondary");
 }
 
 // Start game
